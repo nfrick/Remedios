@@ -1,0 +1,762 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RemediosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ClassesTerapeuticas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="120" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Laboratorios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="120" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PrincipiosAtivos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PrincipiosRemedios">
+          <Key>
+            <PropertyRef Name="PrincipioAtivoID" />
+            <PropertyRef Name="RemedioID" />
+          </Key>
+          <Property Name="PrincipioAtivoID" Type="int" Nullable="false" />
+          <Property Name="RemedioID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Produtos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Remedios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LaboratorioID" Type="int" Nullable="false" />
+          <Property Name="ProdutoID" Type="int" Nullable="false" />
+          <Property Name="Apresentacao" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ClasseTerapeuticaID" Type="int" Nullable="false" />
+          <Property Name="TipoDeProdutoID" Type="int" Nullable="false" />
+          <Property Name="RestricaoHospitalar" Type="bit" Nullable="false" />
+          <Property Name="TarjaID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tarjas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TiposDeProdutos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RemedioID" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Indicacoes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RemedioID" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Principios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RemedioID" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Dose" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Remedios1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Apresentacao" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Quantidade" Type="int" Nullable="false" />
+          <Property Name="Unidade" Type="nvarchar" MaxLength="50" />
+          <Property Name="Link" Type="varchar" MaxLength="100" />
+          <Property Name="Veterinario" Type="bit" />
+          <Property Name="Humano" Type="bit" />
+          <Property Name="Bula" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Categorias_Remedios">
+          <End Role="Remedios1" Type="Self.Remedios1" Multiplicity="1" />
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remedios1">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Categorias">
+              <PropertyRef Name="RemedioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Indicacoes_Remedios">
+          <End Role="Remedios1" Type="Self.Remedios1" Multiplicity="1" />
+          <End Role="Indicacoes" Type="Self.Indicacoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remedios1">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Indicacoes">
+              <PropertyRef Name="RemedioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Principios_Remedios">
+          <End Role="Remedios1" Type="Self.Remedios1" Multiplicity="1" />
+          <End Role="Principios" Type="Self.Principios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remedios1">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Principios">
+              <PropertyRef Name="RemedioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrincipiosAtivos_PrincipiosRemedios">
+          <End Role="PrincipiosAtivos" Type="Self.PrincipiosAtivos" Multiplicity="1" />
+          <End Role="PrincipiosRemedios" Type="Self.PrincipiosRemedios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrincipiosAtivos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PrincipiosRemedios">
+              <PropertyRef Name="PrincipioAtivoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrincipiosRemedios_Remedios">
+          <End Role="Remedios" Type="Self.Remedios" Multiplicity="1" />
+          <End Role="PrincipiosRemedios" Type="Self.PrincipiosRemedios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remedios">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PrincipiosRemedios">
+              <PropertyRef Name="RemedioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Remedios_ClassesTerapeuticas">
+          <End Role="ClassesTerapeuticas" Type="Self.ClassesTerapeuticas" Multiplicity="1" />
+          <End Role="Remedios" Type="Self.Remedios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassesTerapeuticas">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Remedios">
+              <PropertyRef Name="ClasseTerapeuticaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Remedios_Laboratorios">
+          <End Role="Laboratorios" Type="Self.Laboratorios" Multiplicity="1" />
+          <End Role="Remedios" Type="Self.Remedios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Laboratorios">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Remedios">
+              <PropertyRef Name="LaboratorioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Remedios_Produtos">
+          <End Role="Produtos" Type="Self.Produtos" Multiplicity="1" />
+          <End Role="Remedios" Type="Self.Remedios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produtos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Remedios">
+              <PropertyRef Name="ProdutoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Remedios_Tarjas">
+          <End Role="Tarjas" Type="Self.Tarjas" Multiplicity="1" />
+          <End Role="Remedios" Type="Self.Remedios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarjas">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Remedios">
+              <PropertyRef Name="TarjaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Remedios_TiposDeProdutos">
+          <End Role="TiposDeProdutos" Type="Self.TiposDeProdutos" Multiplicity="1" />
+          <End Role="Remedios" Type="Self.Remedios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposDeProdutos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Remedios">
+              <PropertyRef Name="TipoDeProdutoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spCategorias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spCategoriasRemedios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spIndicacoes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spPrincipiosRemedios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spRemedios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="qtd" Type="int" Mode="In" />
+          <Parameter Name="humano" Type="bit" Mode="In" />
+          <Parameter Name="vet" Type="bit" Mode="In" />
+          <Parameter Name="cats" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="inds" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="prins" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="RemediosModelStoreContainer">
+          <EntitySet Name="ClassesTerapeuticas" EntityType="Self.ClassesTerapeuticas" Schema="Anvisa" store:Type="Tables" />
+          <EntitySet Name="Laboratorios" EntityType="Self.Laboratorios" Schema="Anvisa" store:Type="Tables" />
+          <EntitySet Name="PrincipiosAtivos" EntityType="Self.PrincipiosAtivos" Schema="Anvisa" store:Type="Tables" />
+          <EntitySet Name="PrincipiosRemedios" EntityType="Self.PrincipiosRemedios" Schema="Anvisa" store:Type="Tables" />
+          <EntitySet Name="Produtos" EntityType="Self.Produtos" Schema="Anvisa" store:Type="Tables" />
+          <EntitySet Name="Remedios" EntityType="Self.Remedios" Schema="Anvisa" store:Type="Tables" />
+          <EntitySet Name="Tarjas" EntityType="Self.Tarjas" Schema="Anvisa" store:Type="Tables" />
+          <EntitySet Name="TiposDeProdutos" EntityType="Self.TiposDeProdutos" Schema="Anvisa" store:Type="Tables" />
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Indicacoes" EntityType="Self.Indicacoes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Principios" EntityType="Self.Principios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Remedios1" EntityType="Self.Remedios1" Schema="dbo" Table="Remedios" store:Type="Tables" />
+          <AssociationSet Name="FK_Categorias_Remedios" Association="Self.FK_Categorias_Remedios">
+            <End Role="Remedios1" EntitySet="Remedios1" />
+            <End Role="Categorias" EntitySet="Categorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Indicacoes_Remedios" Association="Self.FK_Indicacoes_Remedios">
+            <End Role="Remedios1" EntitySet="Remedios1" />
+            <End Role="Indicacoes" EntitySet="Indicacoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Principios_Remedios" Association="Self.FK_Principios_Remedios">
+            <End Role="Remedios1" EntitySet="Remedios1" />
+            <End Role="Principios" EntitySet="Principios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrincipiosAtivos_PrincipiosRemedios" Association="Self.FK_PrincipiosAtivos_PrincipiosRemedios">
+            <End Role="PrincipiosAtivos" EntitySet="PrincipiosAtivos" />
+            <End Role="PrincipiosRemedios" EntitySet="PrincipiosRemedios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrincipiosRemedios_Remedios" Association="Self.FK_PrincipiosRemedios_Remedios">
+            <End Role="Remedios" EntitySet="Remedios" />
+            <End Role="PrincipiosRemedios" EntitySet="PrincipiosRemedios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Remedios_ClassesTerapeuticas" Association="Self.FK_Remedios_ClassesTerapeuticas">
+            <End Role="ClassesTerapeuticas" EntitySet="ClassesTerapeuticas" />
+            <End Role="Remedios" EntitySet="Remedios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Remedios_Laboratorios" Association="Self.FK_Remedios_Laboratorios">
+            <End Role="Laboratorios" EntitySet="Laboratorios" />
+            <End Role="Remedios" EntitySet="Remedios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Remedios_Produtos" Association="Self.FK_Remedios_Produtos">
+            <End Role="Produtos" EntitySet="Produtos" />
+            <End Role="Remedios" EntitySet="Remedios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Remedios_Tarjas" Association="Self.FK_Remedios_Tarjas">
+            <End Role="Tarjas" EntitySet="Tarjas" />
+            <End Role="Remedios" EntitySet="Remedios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Remedios_TiposDeProdutos" Association="Self.FK_Remedios_TiposDeProdutos">
+            <End Role="TiposDeProdutos" EntitySet="TiposDeProdutos" />
+            <End Role="Remedios" EntitySet="Remedios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RemediosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Principio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RemedioID" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Dose" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Remedio" Relationship="Self.FK_Principios_Remedios" FromRole="Principios" ToRole="Remedios" />
+        </EntityType>
+        <EntityType Name="Remedio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apresentacao" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantidade" Type="Int32" Nullable="false" />
+          <Property Name="Unidade" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Bula" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Principios" Relationship="Self.FK_Principios_Remedios" FromRole="Remedios" ToRole="Principios" />
+          <Property Name="Link" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Categorias" Relationship="RemediosModel.FK_Categorias_Remedios" FromRole="Remedio" ToRole="Categorias" />
+          <NavigationProperty Name="Indicacoes" Relationship="RemediosModel.FK_Indicacoes_Remedios" FromRole="Remedio" ToRole="Indicacoes" />
+          <Property Name="Veterinario" Type="Boolean" />
+          <Property Name="Humano" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_Principios_Remedios">
+          <End Role="Remedios" Type="RemediosModel.Remedio" Multiplicity="1" />
+          <End Role="Principios" Type="RemediosModel.Principio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remedios">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Principios">
+              <PropertyRef Name="RemedioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RemediosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Principios" EntityType="RemediosModel.Principio" />
+          <EntitySet Name="Remedios" EntityType="RemediosModel.Remedio" />
+          <AssociationSet Name="FK_Principios_Remedios" Association="Self.FK_Principios_Remedios">
+            <End Role="Remedios" EntitySet="Remedios" />
+            <End Role="Principios" EntitySet="Principios" />
+          </AssociationSet>
+          <EntitySet Name="Categorias" EntityType="RemediosModel.Categoria" />
+          <EntitySet Name="Indicacoes" EntityType="RemediosModel.Indicacao" />
+          <AssociationSet Name="FK_Categorias_Remedios" Association="RemediosModel.FK_Categorias_Remedios">
+            <End Role="Remedio" EntitySet="Remedios" />
+            <End Role="Categorias" EntitySet="Categorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Indicacoes_Remedios" Association="RemediosModel.FK_Indicacoes_Remedios">
+            <End Role="Remedio" EntitySet="Remedios" />
+            <End Role="Indicacoes" EntitySet="Indicacoes" />
+          </AssociationSet>
+          <FunctionImport Name="spCategorias" ReturnType="Collection(String)" />
+          <FunctionImport Name="spIndicacoes" ReturnType="Collection(String)" />
+          <FunctionImport Name="spRemedios" EntitySet="Remedios" ReturnType="Collection(RemediosModel.Remedio)">
+            <Parameter Name="qtd" Mode="In" Type="Int32" />
+            <Parameter Name="humano" Mode="In" Type="Boolean" />
+            <Parameter Name="vet" Mode="In" Type="Boolean" />
+            <Parameter Name="cats" Mode="In" Type="String" />
+            <Parameter Name="inds" Mode="In" Type="String" />
+            <Parameter Name="prins" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="ClasseTerapeuticas" EntityType="RemediosModel.ClasseTerapeutica" />
+          <EntitySet Name="Laboratorios" EntityType="RemediosModel.Laboratorio" />
+          <EntitySet Name="PrincipiosAtivos" EntityType="RemediosModel.PrincipioAtivo" />
+          <EntitySet Name="Produtos" EntityType="RemediosModel.Produto" />
+          <EntitySet Name="AnvisaRemedios" EntityType="RemediosModel.AnvisaRemedio" />
+          <EntitySet Name="Tarjas" EntityType="RemediosModel.Tarja" />
+          <EntitySet Name="TiposDeProdutos" EntityType="RemediosModel.TipoDeProduto" />
+          <AssociationSet Name="FK_Remedios_ClassesTerapeuticas" Association="RemediosModel.FK_Remedios_ClassesTerapeuticas">
+            <End Role="ClassesTerapeutica" EntitySet="ClasseTerapeuticas" />
+            <End Role="Remedio1" EntitySet="AnvisaRemedios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Remedios_Laboratorios" Association="RemediosModel.FK_Remedios_Laboratorios">
+            <End Role="Laboratorio" EntitySet="Laboratorios" />
+            <End Role="Remedio1" EntitySet="AnvisaRemedios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Remedios_Produtos" Association="RemediosModel.FK_Remedios_Produtos">
+            <End Role="Produto" EntitySet="Produtos" />
+            <End Role="Remedio1" EntitySet="AnvisaRemedios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Remedios_Tarjas" Association="RemediosModel.FK_Remedios_Tarjas">
+            <End Role="Tarja" EntitySet="Tarjas" />
+            <End Role="Remedio1" EntitySet="AnvisaRemedios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Remedios_TiposDeProdutos" Association="RemediosModel.FK_Remedios_TiposDeProdutos">
+            <End Role="TiposDeProduto" EntitySet="TiposDeProdutos" />
+            <End Role="Remedio1" EntitySet="AnvisaRemedios" />
+          </AssociationSet>
+          <AssociationSet Name="PrincipiosRemedios" Association="RemediosModel.PrincipiosRemedios">
+            <End Role="PrincipiosAtivo" EntitySet="PrincipiosAtivos" />
+            <End Role="Remedio1" EntitySet="AnvisaRemedios" />
+          </AssociationSet>
+          <FunctionImport Name="spCategoriasRemedios" ReturnType="Collection(RemediosModel.CategoriaRemedio)" />
+          <FunctionImport Name="spPrincipiosRemedios" ReturnType="Collection(RemediosModel.PrincipioRemedio)" />
+        </EntityContainer>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RemedioID" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Remedio" Relationship="RemediosModel.FK_Categorias_Remedios" FromRole="Categorias" ToRole="Remedio" />
+        </EntityType>
+        <EntityType Name="Indicacao">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RemedioID" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Remedio" Relationship="RemediosModel.FK_Indicacoes_Remedios" FromRole="Indicacoes" ToRole="Remedio" />
+        </EntityType>
+        <Association Name="FK_Categorias_Remedios">
+          <End Type="RemediosModel.Remedio" Role="Remedio" Multiplicity="1" />
+          <End Type="RemediosModel.Categoria" Role="Categorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remedio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Categorias">
+              <PropertyRef Name="RemedioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Indicacoes_Remedios">
+          <End Type="RemediosModel.Remedio" Role="Remedio" Multiplicity="1" />
+          <End Type="RemediosModel.Indicacao" Role="Indicacoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Remedio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Indicacoes">
+              <PropertyRef Name="RemedioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ClasseTerapeutica">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Remedios" Relationship="RemediosModel.FK_Remedios_ClassesTerapeuticas" FromRole="ClassesTerapeutica" ToRole="Remedio1" />
+        </EntityType>
+        <EntityType Name="Laboratorio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Remedios" Relationship="RemediosModel.FK_Remedios_Laboratorios" FromRole="Laboratorio" ToRole="Remedio1" />
+        </EntityType>
+        <EntityType Name="PrincipioAtivo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Remedios" Relationship="RemediosModel.PrincipiosRemedios" FromRole="PrincipiosAtivo" ToRole="Remedio1" />
+        </EntityType>
+        <EntityType Name="Produto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Remedios" Relationship="RemediosModel.FK_Remedios_Produtos" FromRole="Produto" ToRole="Remedio1" />
+        </EntityType>
+        <EntityType Name="AnvisaRemedio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LaboratorioID" Type="Int32" Nullable="false" />
+          <Property Name="ProdutoID" Type="Int32" Nullable="false" />
+          <Property Name="Apresentacao" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ClasseTerapeuticaID" Type="Int32" Nullable="false" />
+          <Property Name="TipoDeProdutoID" Type="Int32" Nullable="false" />
+          <Property Name="RestricaoHospitalar" Type="Boolean" Nullable="false" />
+          <Property Name="TarjaID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClasseTerapeutica" Relationship="RemediosModel.FK_Remedios_ClassesTerapeuticas" FromRole="Remedio1" ToRole="ClassesTerapeutica" />
+          <NavigationProperty Name="Laboratorio" Relationship="RemediosModel.FK_Remedios_Laboratorios" FromRole="Remedio1" ToRole="Laboratorio" />
+          <NavigationProperty Name="Produto" Relationship="RemediosModel.FK_Remedios_Produtos" FromRole="Remedio1" ToRole="Produto" />
+          <NavigationProperty Name="Tarja" Relationship="RemediosModel.FK_Remedios_Tarjas" FromRole="Remedio1" ToRole="Tarja" />
+          <NavigationProperty Name="TiposDeProduto" Relationship="RemediosModel.FK_Remedios_TiposDeProdutos" FromRole="Remedio1" ToRole="TiposDeProduto" />
+          <NavigationProperty Name="PrincipiosAtivos" Relationship="RemediosModel.PrincipiosRemedios" FromRole="Remedio1" ToRole="PrincipiosAtivo" />
+        </EntityType>
+        <EntityType Name="Tarja">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Remedios" Relationship="RemediosModel.FK_Remedios_Tarjas" FromRole="Tarja" ToRole="Remedio1" />
+        </EntityType>
+        <EntityType Name="TipoDeProduto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Remedios" Relationship="RemediosModel.FK_Remedios_TiposDeProdutos" FromRole="TiposDeProduto" ToRole="Remedio1" />
+        </EntityType>
+        <Association Name="FK_Remedios_ClassesTerapeuticas">
+          <End Type="RemediosModel.ClasseTerapeutica" Role="ClassesTerapeutica" Multiplicity="1" />
+          <End Type="RemediosModel.AnvisaRemedio" Role="Remedio1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassesTerapeutica">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Remedio1">
+              <PropertyRef Name="ClasseTerapeuticaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Remedios_Laboratorios">
+          <End Type="RemediosModel.Laboratorio" Role="Laboratorio" Multiplicity="1" />
+          <End Type="RemediosModel.AnvisaRemedio" Role="Remedio1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Laboratorio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Remedio1">
+              <PropertyRef Name="LaboratorioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Remedios_Produtos">
+          <End Type="RemediosModel.Produto" Role="Produto" Multiplicity="1" />
+          <End Type="RemediosModel.AnvisaRemedio" Role="Remedio1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Remedio1">
+              <PropertyRef Name="ProdutoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Remedios_Tarjas">
+          <End Type="RemediosModel.Tarja" Role="Tarja" Multiplicity="1" />
+          <End Type="RemediosModel.AnvisaRemedio" Role="Remedio1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tarja">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Remedio1">
+              <PropertyRef Name="TarjaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Remedios_TiposDeProdutos">
+          <End Type="RemediosModel.TipoDeProduto" Role="TiposDeProduto" Multiplicity="1" />
+          <End Type="RemediosModel.AnvisaRemedio" Role="Remedio1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TiposDeProduto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Remedio1">
+              <PropertyRef Name="TipoDeProdutoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PrincipiosRemedios">
+          <End Type="RemediosModel.PrincipioAtivo" Role="PrincipiosAtivo" Multiplicity="*" />
+          <End Type="RemediosModel.AnvisaRemedio" Role="Remedio1" Multiplicity="*" />
+        </Association>
+        <ComplexType Name="CategoriaRemedio">
+          <Property Type="String" Name="Categoria" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="Nome" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Apresentacao" Nullable="false" MaxLength="30" />
+          <Property Type="Boolean" Name="Humano" Nullable="true" />
+          <Property Type="Int32" Name="Quantidade" Nullable="false" />
+          <Property Type="String" Name="Unidade" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="Veterinario" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="PrincipioRemedio">
+          <Property Type="String" Name="Principio" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Nome" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Apresentacao" Nullable="false" MaxLength="30" />
+          <Property Type="Boolean" Name="Humano" Nullable="true" />
+          <Property Type="Int32" Name="Quantidade" Nullable="false" />
+          <Property Type="String" Name="Unidade" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="Veterinario" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RemediosModelStoreContainer" CdmEntityContainer="RemediosEntities">
+          <EntitySetMapping Name="Principios">
+            <EntityTypeMapping TypeName="RemediosModel.Principio">
+              <MappingFragment StoreEntitySet="Principios">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RemedioID" ColumnName="RemedioID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Dose" ColumnName="Dose" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Remedios">
+            <EntityTypeMapping TypeName="RemediosModel.Remedio">
+              <MappingFragment StoreEntitySet="Remedios1">
+                <ScalarProperty Name="Humano" ColumnName="Humano" />
+                <ScalarProperty Name="Veterinario" ColumnName="Veterinario" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Apresentacao" ColumnName="Apresentacao" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+                <ScalarProperty Name="Unidade" ColumnName="Unidade" />
+                <ScalarProperty Name="Bula" ColumnName="Bula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="RemediosModel.Categoria">
+              <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="RemedioID" ColumnName="RemedioID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Indicacoes">
+            <EntityTypeMapping TypeName="RemediosModel.Indicacao">
+              <MappingFragment StoreEntitySet="Indicacoes">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="RemedioID" ColumnName="RemedioID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spCategorias" FunctionName="RemediosModel.Store.spCategorias" />
+          <FunctionImportMapping FunctionImportName="spIndicacoes" FunctionName="RemediosModel.Store.spIndicacoes" />
+          <FunctionImportMapping FunctionImportName="spRemedios" FunctionName="RemediosModel.Store.spRemedios" />
+          <EntitySetMapping Name="ClasseTerapeuticas">
+            <EntityTypeMapping TypeName="RemediosModel.ClasseTerapeutica">
+              <MappingFragment StoreEntitySet="ClassesTerapeuticas">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Laboratorios">
+            <EntityTypeMapping TypeName="RemediosModel.Laboratorio">
+              <MappingFragment StoreEntitySet="Laboratorios">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrincipiosAtivos">
+            <EntityTypeMapping TypeName="RemediosModel.PrincipioAtivo">
+              <MappingFragment StoreEntitySet="PrincipiosAtivos">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produtos">
+            <EntityTypeMapping TypeName="RemediosModel.Produto">
+              <MappingFragment StoreEntitySet="Produtos">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnvisaRemedios">
+            <EntityTypeMapping TypeName="RemediosModel.AnvisaRemedio">
+              <MappingFragment StoreEntitySet="Remedios">
+                <ScalarProperty Name="TarjaID" ColumnName="TarjaID" />
+                <ScalarProperty Name="RestricaoHospitalar" ColumnName="RestricaoHospitalar" />
+                <ScalarProperty Name="TipoDeProdutoID" ColumnName="TipoDeProdutoID" />
+                <ScalarProperty Name="ClasseTerapeuticaID" ColumnName="ClasseTerapeuticaID" />
+                <ScalarProperty Name="Apresentacao" ColumnName="Apresentacao" />
+                <ScalarProperty Name="ProdutoID" ColumnName="ProdutoID" />
+                <ScalarProperty Name="LaboratorioID" ColumnName="LaboratorioID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tarjas">
+            <EntityTypeMapping TypeName="RemediosModel.Tarja">
+              <MappingFragment StoreEntitySet="Tarjas">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposDeProdutos">
+            <EntityTypeMapping TypeName="RemediosModel.TipoDeProduto">
+              <MappingFragment StoreEntitySet="TiposDeProdutos">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PrincipiosRemedios" TypeName="RemediosModel.PrincipiosRemedios" StoreEntitySet="PrincipiosRemedios">
+            <EndProperty Name="Remedio1">
+              <ScalarProperty Name="ID" ColumnName="RemedioID" />
+            </EndProperty>
+            <EndProperty Name="PrincipiosAtivo">
+              <ScalarProperty Name="ID" ColumnName="PrincipioAtivoID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="spCategoriasRemedios" FunctionName="RemediosModel.Store.spCategoriasRemedios">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RemediosModel.CategoriaRemedio">
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Apresentacao" ColumnName="Apresentacao" />
+                <ScalarProperty Name="Humano" ColumnName="Humano" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+                <ScalarProperty Name="Unidade" ColumnName="Unidade" />
+                <ScalarProperty Name="Veterinario" ColumnName="Veterinario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spPrincipiosRemedios" FunctionName="RemediosModel.Store.spPrincipiosRemedios">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RemediosModel.PrincipioRemedio">
+                <ScalarProperty Name="Principio" ColumnName="Principio" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Apresentacao" ColumnName="Apresentacao" />
+                <ScalarProperty Name="Humano" ColumnName="Humano" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+                <ScalarProperty Name="Unidade" ColumnName="Unidade" />
+                <ScalarProperty Name="Veterinario" ColumnName="Veterinario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

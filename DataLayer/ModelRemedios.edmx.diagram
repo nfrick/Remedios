@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c47c5ff5668348c48097ce75ae518ad4" Name="Diagram1">
+        <EntityTypeShape EntityType="RemediosModel.Principio" Width="1.5" PointX="7.875" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RemediosModel.Remedio" Width="1.5" PointX="5.625" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="RemediosModel.FK_Principios_Remedios" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="RemediosModel.Categoria" Width="1.5" PointX="3.25" PointY="2.5" />
+        <EntityTypeShape EntityType="RemediosModel.Indicacao" Width="1.5" PointX="3.25" PointY="0.5" />
+        <AssociationConnector Association="RemediosModel.FK_Categorias_Remedios" />
+        <AssociationConnector Association="RemediosModel.FK_Indicacoes_Remedios" />
+        <EntityTypeShape EntityType="RemediosModel.ClasseTerapeutica" Width="1.5" PointX="3.25" PointY="8.375" FillColor="255, 224, 192" />
+        <EntityTypeShape EntityType="RemediosModel.Laboratorio" Width="1.5" PointX="7.875" PointY="6.5" FillColor="255, 224, 192" />
+        <EntityTypeShape EntityType="RemediosModel.PrincipioAtivo" Width="1.5" PointX="7.875" PointY="4.625" FillColor="255, 224, 192" />
+        <EntityTypeShape EntityType="RemediosModel.Produto" Width="1.5" PointX="7.875" PointY="8.375" FillColor="255, 224, 192" />
+        <EntityTypeShape EntityType="RemediosModel.AnvisaRemedio" Width="1.5" PointX="5.625" PointY="4.625" FillColor="255, 224, 192" />
+        <EntityTypeShape EntityType="RemediosModel.Tarja" Width="1.5" PointX="3.25" PointY="6.5" FillColor="255, 224, 192" />
+        <EntityTypeShape EntityType="RemediosModel.TipoDeProduto" Width="1.5" PointX="3.25" PointY="4.625" FillColor="255, 224, 192" />
+        <AssociationConnector Association="RemediosModel.FK_Remedios_ClassesTerapeuticas" />
+        <AssociationConnector Association="RemediosModel.FK_Remedios_Laboratorios" />
+        <AssociationConnector Association="RemediosModel.FK_Remedios_Produtos" />
+        <AssociationConnector Association="RemediosModel.FK_Remedios_Tarjas" />
+        <AssociationConnector Association="RemediosModel.FK_Remedios_TiposDeProdutos" />
+        <AssociationConnector Association="RemediosModel.PrincipiosRemedios" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

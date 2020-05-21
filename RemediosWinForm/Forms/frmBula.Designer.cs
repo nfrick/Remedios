@@ -1,0 +1,57 @@
+﻿namespace RemediosWinForm {
+    partial class frmBula {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing) {
+            if (disposing && (components != null)) {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent() {
+            this.richTextBoxBula = new System.Windows.Forms.RichTextBox();
+            this.SuspendLayout();
+            // 
+            // richTextBoxBula
+            // 
+            this.richTextBoxBula.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxBula.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxBula.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoxBula.Name = "richTextBoxBula";
+            this.richTextBoxBula.ReadOnly = true;
+            this.richTextBoxBula.Size = new System.Drawing.Size(782, 453);
+            this.richTextBoxBula.TabIndex = 0;
+            this.richTextBoxBula.Text = "";
+            // 
+            // frmBula
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(782, 453);
+            this.Controls.Add(this.richTextBoxBula);
+            this.Name = "frmBula";
+            this.Text = "Bula";
+            this.Load += new System.EventHandler(this.frmBula_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        public System.Windows.Forms.RichTextBox richTextBoxBula;
+    }
+}
